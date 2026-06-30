@@ -14,7 +14,7 @@ Pytorch model weights were initialized using parameters ported from David Sandbe
 
 Also included in this repo is an efficient pytorch implementation of MTCNN for face detection prior to inference. These models are also pretrained. To our knowledge, this is the fastest MTCNN implementation available.
 
-## 🚀 Key Contributions of Mirza & Team
+## 🚀 Key Contributions 
 
 We have enhanced, optimized, and repackaged the face recognition capabilities to make them enterprise-ready and edge-capable:
 
