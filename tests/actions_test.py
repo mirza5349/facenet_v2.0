@@ -13,8 +13,8 @@ from time import time
 import sys, os
 import glob
 
-from models.mtcnn import MTCNN, fixed_image_standardization
-from models.inception_resnet_v1 import InceptionResnetV1, get_torch_home
+from facenet_mirza.models.mtcnn import MTCNN, fixed_image_standardization
+from facenet_mirza.models.inception_resnet_v1 import InceptionResnetV1, get_torch_home
 
 
 #### CLEAR ALL OUTPUT FILES ####
@@ -24,7 +24,7 @@ for c in checkpoints:
     print('Removing {}'.format(c))
     os.remove(c)
 
-crop_files = glob.glob('data/test_images_aligned/**/*.png')
+crop_files = glob.glob('facenet_mirza/data/test_images_aligned/**/*.png')
 for c in crop_files:
     print('Removing {}'.format(c))
     os.remove(c)
@@ -58,7 +58,7 @@ trans_cropped = transforms.Compose([
     fixed_image_standardization
 ])
 
-dataset = datasets.ImageFolder('data/test_images', transform=trans)
+dataset = datasets.ImageFolder('facenet_mirza/data/test_images', transform=trans)
 dataset.idx_to_class = {k: v for v, k in dataset.class_to_idx.items()}
 
 mtcnn_pt = MTCNN(device=torch.device('cpu'))
@@ -69,7 +69,7 @@ aligned_fromfile = []
 for img, idx in dataset:
     name = dataset.idx_to_class[idx]
     start = time()
-    img_align = mtcnn_pt(img, save_path='data/test_images_aligned/{}/1.png'.format(name))
+    img_align = mtcnn_pt(img, save_path='facenet_mirza/data/test_images_aligned/{}/1.png'.format(name))
     print('MTCNN time: {:6f} seconds'.format(time() - start))
     
     # Comparison between types
@@ -95,7 +95,7 @@ for img, idx in dataset:
     if img_align is not None:
         names.append(name)
         aligned.append(img_align)
-        aligned_fromfile.append(get_image('data/test_images_aligned/{}/1.png'.format(name), trans_cropped))
+        aligned_fromfile.append(get_image('facenet_mirza/data/test_images_aligned/{}/1.png'.format(name), trans_cropped))
 
 aligned = torch.stack(aligned)
 aligned_fromfile = torch.stack(aligned_fromfile)
@@ -158,19 +158,19 @@ prob = resnet_pt(aligned)
 #### MULTI-FACE TEST ####
 
 mtcnn = MTCNN(keep_all=True)
-img = Image.open('data/multiface.jpg')
+img = Image.open('facenet_mirza/data/multiface.jpg')
 boxes, probs = mtcnn.detect(img)
 
 draw = ImageDraw.Draw(img)
 for i, box in enumerate(boxes):
     draw.rectangle(box.tolist())
 
-mtcnn(img, save_path='data/tmp.png')
+mtcnn(img, save_path='facenet_mirza/data/tmp.png')
 
 
 #### MTCNN TYPES TEST ####
 
-img = Image.open('data/multiface.jpg')
+img = Image.open('facenet_mirza/data/multiface.jpg')
 
 mtcnn = MTCNN(keep_all=True)
 boxes_ref, _ = mtcnn.detect(img)
@@ -212,13 +212,13 @@ if torch.cuda.is_available():
 
 mtcnn = MTCNN(keep_all=True)
 img = [
-    Image.open('data/multiface.jpg'),
-    Image.open('data/multiface.jpg')
+    Image.open('facenet_mirza/data/multiface.jpg'),
+    Image.open('facenet_mirza/data/multiface.jpg')
 ]
 batch_boxes, batch_probs = mtcnn.detect(img)
 
-mtcnn(img, save_path=['data/tmp1.png', 'data/tmp1.png'])
-tmp_files = glob.glob('data/tmp*')
+mtcnn(img, save_path=['facenet_mirza/data/tmp1.png', 'facenet_mirza/data/tmp1.png'])
+tmp_files = glob.glob('facenet_mirza/data/tmp*')
 for f in tmp_files:
     os.remove(f)
 

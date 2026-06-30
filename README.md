@@ -1,10 +1,12 @@
-# Face Recognition Using Pytorch 
+# Face Recognition Using Pytorch - Facenet Mirza
 
-*You can also read a translated version of this file [in Chinese 简体中文版](README_cn.md).*
+<p align="center">
+  <img src="facenet_mirza/data/facenet_mirza_banner.png" alt="Facenet Mirza Banner" width="100%">
+</p>
 
-[![Downloads](https://pepy.tech/badge/facenet-pytorch)](https://pepy.tech/project/facenet-pytorch)
+[![Downloads](https://pepy.tech/badge/facenet-mirza)](https://pepy.tech/project/facenet-mirza)
 
-[![Code Coverage](https://img.shields.io/codecov/c/github/timesler/facenet-pytorch.svg)](https://codecov.io/gh/timesler/facenet-pytorch)
+[![Code Coverage](https://img.shields.io/codecov/c/github/timesler/facenet-mirza.svg)](https://codecov.io/gh/timesler/facenet-mirza)
 
 This is a repository for Inception Resnet (V1) models in pytorch, pretrained on VGGFace2 and CASIA-Webface.
 
@@ -21,7 +23,7 @@ Also included in this repo is an efficient pytorch implementation of MTCNN for f
   + [*Complete detection and recognition pipeline*](#complete-detection-and-recognition-pipeline)
   + [*Face tracking in video streams*](#face-tracking-in-video-streams)
   + [*Finetuning pretrained models with new data*](#finetuning-pretrained-models-with-new-data)
-  + [*Guide to MTCNN in facenet-pytorch*](#guide-to-mtcnn-in-facenet-pytorch)
+  + [*Guide to MTCNN in facenet-mirza*](#guide-to-mtcnn-in-facenet-mirza)
   + [*Performance comparison of face detection packages*](#performance-comparison-of-face-detection-packages)
   + [*The FastMTCNN algorithm*](#the-fastmtcnn-algorithm)
 * [Running with docker](#running-with-docker)
@@ -35,19 +37,19 @@ Also included in this repo is an efficient pytorch implementation of MTCNN for f
     
     ```bash
     # With pip:
-    pip install facenet-pytorch
+    pip install facenet-mirza
     
     # or clone this repo, removing the '-' to allow python imports:
-    git clone https://github.com/timesler/facenet-pytorch.git facenet_pytorch
+    git clone https://github.com/timesler/facenet-mirza.git facenet_mirza
     
     # or use a docker container (see https://github.com/timesler/docker-jupyter-dl-gpu):
-    docker run -it --rm timesler/jupyter-dl-gpu pip install facenet-pytorch && ipython
+    docker run -it --rm timesler/jupyter-dl-gpu pip install facenet-mirza && ipython
     ```
     
-1. In python, import facenet-pytorch and instantiate models:
+1. In python, import facenet-mirza and instantiate models:
     
     ```python
-    from facenet_pytorch import MTCNN, InceptionResnetV1
+    from facenet_mirza import MTCNN, InceptionResnetV1
     
     # If required, create a face detection pipeline using MTCNN:
     mtcnn = MTCNN(image_size=<image_size>, margin=<margin>)
@@ -84,13 +86,13 @@ The following models have been ported to pytorch (with links to download pytorch
 
 |Model name|LFW accuracy (as listed [here](https://github.com/davidsandberg/facenet))|Training dataset|
 | :- | :-: | -: |
-|[20180408-102900](https://github.com/timesler/facenet-pytorch/releases/download/v2.2.9/20180408-102900-casia-webface.pt) (111MB)|0.9905|CASIA-Webface|
-|[20180402-114759](https://github.com/timesler/facenet-pytorch/releases/download/v2.2.9/20180402-114759-vggface2.pt) (107MB)|0.9965|VGGFace2|
+|[20180408-102900](https://github.com/timesler/facenet-mirza/releases/download/v2.2.9/20180408-102900-casia-webface.pt) (111MB)|0.9905|CASIA-Webface|
+|[20180402-114759](https://github.com/timesler/facenet-mirza/releases/download/v2.2.9/20180402-114759-vggface2.pt) (107MB)|0.9965|VGGFace2|
 
 There is no need to manually download the pretrained state_dict's; they are downloaded automatically on model instantiation and cached for future use in the torch cache. To use an Inception Resnet (V1) model for facial recognition/identification in pytorch, use:
 
 ```python
-from facenet_pytorch import InceptionResnetV1
+from facenet_mirza import InceptionResnetV1
 
 # For a model pretrained on VGGFace2
 model = InceptionResnetV1(pretrained='vggface2').eval()
@@ -125,7 +127,7 @@ MTCNN can be used to build a face tracking system (using the `MTCNN.detect()` me
 
 In most situations, the best way to implement face recognition is to use the pretrained models directly, with either a clustering algorithm or a simple distance metrics to determine the identity of a face. However, if finetuning is required (i.e., if you want to select identity based on the model's output logits), an example can be found at [examples/finetune.ipynb](examples/finetune.ipynb).
 
-### *Guide to MTCNN in facenet-pytorch*
+### *Guide to MTCNN in facenet-mirza*
 
 This guide demonstrates the functionality of the MTCNN module. Topics covered are:
 
@@ -137,13 +139,13 @@ This guide demonstrates the functionality of the MTCNN module. Topics covered ar
 * Bounding boxes and facial landmarks
 * Saving face datasets
 
-See the [notebook on kaggle](https://www.kaggle.com/timesler/guide-to-mtcnn-in-facenet-pytorch).
+See the [notebook on kaggle](https://www.kaggle.com/timesler/guide-to-mtcnn-in-facenet-mirza).
 
 ### *Performance comparison of face detection packages*
 
 This notebook demonstrates the use of three face detection packages:
 
-1. facenet-pytorch
+1. facenet-mirza
 1. mtcnn
 1. dlib
 
@@ -151,8 +153,8 @@ Each package is tested for its speed in detecting the faces in a set of 300 imag
 
 |Package|FPS (1080x1920)|FPS (720x1280)|FPS (540x960)|
 |---|---|---|---|
-|facenet-pytorch|12.97|20.32|25.50|
-|facenet-pytorch (non-batched)|9.75|14.81|19.68|
+|facenet-mirza|12.97|20.32|25.50|
+|facenet-mirza (non-batched)|9.75|14.81|19.68|
 |dlib|3.80|8.39|14.53|
 |mtcnn|3.04|5.70|8.23|
 
@@ -172,9 +174,9 @@ The package and any of the example notebooks can be run with docker (or nvidia-d
 
 ```bash
 docker run --rm -p 8888:8888
-    -v ./facenet-pytorch:/home/jovyan timesler/jupyter-dl-gpu \
+    -v ./facenet-mirza:/home/jovyan timesler/jupyter-dl-gpu \
     -v <path to data>:/home/jovyan/data
-    pip install facenet-pytorch && jupyter lab 
+    pip install facenet-mirza && jupyter lab 
 ```
 
 Navigate to the examples/ directory and run any of the ipython notebooks.
@@ -185,11 +187,11 @@ See [timesler/jupyter-dl-gpu](https://github.com/timesler/docker-jupyter-dl-gpu)
 
 To use this code in your own git repo, I recommend first adding this repo as a submodule. Note that the dash ('-') in the repo name should be removed when cloning as a submodule as it will break python when importing:
 
-`git submodule add https://github.com/timesler/facenet-pytorch.git facenet_pytorch`
+`git submodule add https://github.com/timesler/facenet-mirza.git facenet_mirza`
 
 Alternatively, the code can be installed as a package using pip:
 
-`pip install facenet-pytorch`
+`pip install facenet-mirza`
 
 ## Conversion of parameters from Tensorflow to Pytorch
 

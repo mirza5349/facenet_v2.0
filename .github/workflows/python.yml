@@ -25,7 +25,7 @@ jobs:
       run: |
         python --version
         echo "import tests.actions_test" > test.py
-        coverage run --source models,examples test.py
+        coverage run --source facenet_mirza,examples test.py
         coverage report
         coverage xml
     - name: Upload coverage to Codecov

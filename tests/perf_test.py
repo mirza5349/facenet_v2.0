@@ -1,4 +1,4 @@
-from facenet_pytorch import MTCNN, training
+from facenet_mirza import MTCNN, training
 import torch
 from torchvision import datasets, transforms
 from torch.utils.data import DataLoader, RandomSampler
@@ -16,7 +16,7 @@ def main():
 
     # Generate data loader
     ds = datasets.ImageFolder(
-        root='data/test_images/',
+        root='facenet_mirza/data/test_images/',
         transform=transforms.Resize((512, 512))
     )
     dl = DataLoader(

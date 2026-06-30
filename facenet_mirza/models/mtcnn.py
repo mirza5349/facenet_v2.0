@@ -249,7 +249,7 @@ class MTCNN(nn.Module):
                 dimension (batch) as the first dimension.
 
         Example:
-        >>> from facenet_pytorch import MTCNN
+        >>> from facenet_mirza import MTCNN
         >>> mtcnn = MTCNN()
         >>> face_tensor, prob = mtcnn(img, save_path='face.png', return_prob=True)
         """
@@ -295,7 +295,7 @@ class MTCNN(nn.Module):
 
         Example:
         >>> from PIL import Image, ImageDraw
-        >>> from facenet_pytorch import MTCNN, extract_face
+        >>> from facenet_mirza import MTCNN, extract_face
         >>> mtcnn = MTCNN(keep_all=True)
         >>> boxes, probs, points = mtcnn.detect(img, landmarks=True)
         >>> # Draw boxes and save faces
